@@ -1,0 +1,39 @@
+POST http://localhost:8000/api/users
+Content-Type: application/json
+
+{
+    "name": "Jane",
+    "email": "jane@anonym.net",
+    "password": "1234"
+}
+
+###
+POST http://localhost:8000/api/websites/subscriptions
+Content-Type: application/json
+
+{
+    "user": 1,
+    "website": 1
+}
+
+###
+POST http://localhost:8000/api/websites/posts
+Content-Type: application/json
+
+{
+    "user": 1,
+    "post_title": "Post Number 1",
+    "post_content": "Post content should be here"
+}
+
+###
+POST http://localhost:8000/api/websites
+Content-Type: application/json
+
+{
+    "user": 1,
+    "website_name": "Inisev",
+    "website_domain": "inisev.com"
+}
+
+###
