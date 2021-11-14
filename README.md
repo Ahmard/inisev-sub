@@ -19,7 +19,7 @@ Edit [.env](.env) file to provide necessary config
 
 Run migrations
 ```
-php artisan migrate -seed
+php artisan migrate --seed
 ```
 
 ## Usage
