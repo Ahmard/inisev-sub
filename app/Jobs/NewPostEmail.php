@@ -4,10 +4,8 @@ namespace App\Jobs;
 
 use App\MailSenderHelper;
 use App\Models\Post;
-use App\Models\Subscription;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -23,7 +21,7 @@ class NewPostEmail implements ShouldQueue
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(protected int $siteId, protected int $postId)
     {
         //
     }
@@ -35,14 +33,11 @@ class NewPostEmail implements ShouldQueue
      */
     public function handle()
     {
-        $siteId = MailSenderHelper::getSiteId();
-        $postId = MailSenderHelper::getPostId();
-
-        $post = Post::query()->find($postId);
+        $post = Post::query()->find($this->postId);
 
         $users = User::query()
             ->join('subscriptions', 'user', 'id')
-            ->whereRaw("website = $siteId AND id NOT IN (SELECT user FROM delivered_subscriptions WHERE post = $postId)")
+            ->whereRaw("website = $this->siteId AND id NOT IN (SELECT user FROM delivered_subscriptions WHERE post = $this->postId)")
             ->get();
 
         echo "Sending email to users...\n";

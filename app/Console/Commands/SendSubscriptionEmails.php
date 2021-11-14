@@ -3,9 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Jobs\NewPostEmail;
-use App\MailSenderHelper;
 use Illuminate\Console\Command;
-use Illuminate\Support\Carbon;
 
 class SendSubscriptionEmails extends Command
 {
@@ -51,11 +49,8 @@ class SendSubscriptionEmails extends Command
             dd('Valid SiteId must be provided');
         }
 
-        MailSenderHelper::init($siteId, $postId);
-
-        $job = new NewPostEmail();
-        $job->delay(Carbon::now()->addMinutes(10));
-        dispatch($job);
+        NewPostEmail::dispatch($siteId, $postId)
+            ->delay(now()->addSeconds(15));
 
         return Command::SUCCESS;
     }
