@@ -28,7 +28,9 @@ Start the server
 php artisan serve
 ```
 
-You will then send json payload to each below endpoints
+You will then send json payload to each below endpoints.<br/>
+I use PhpStorm to send request to the endpoints,
+you can find the [request config here](requests.http)
 
 ### Create User
 POST http://localhost:8000/api/users
